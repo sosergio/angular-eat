@@ -25,8 +25,11 @@
         EatGroupCtrl.$inject = ["$animate", "$element"];
         function EatGroupCtrl($animate, $element){
             var ctrl = this;
-            ctrl.__eat_ctrl_name = "EatGroupController";
-            ctrl.setInvalid = function(isInvalid, id) {
+            ctrl.setInvalid = setInvalid;
+            ctrl.setFocused = setFocused;
+            ctrl.setRequired = setRequired;
+            
+            function setInvalid(isInvalid) {
                 if (isInvalid) {
                     $animate.addClass($element, 'eat-group-invalid');
                     $animate.removeClass($element, 'eat-group-valid');
@@ -34,11 +37,17 @@
                     $animate.addClass($element, 'eat-group-valid');
                     $animate.removeClass($element, 'eat-group-invalid');
                 }
-            };  
+            }  
             
-            ctrl.setFocused = function(isFocused) {
+            function setFocused(isFocused) {
                 $element.toggleClass('eat-group-focused', !!isFocused);
-            };   
+            }
+            
+            function setRequired(isRequired){
+                $element.toggleClass('eat-group-required', !!isRequired);
+            }   
+            
+            
         }
 
     }
@@ -101,9 +110,8 @@
             var isReadonly = angular.isDefined(attr.readonly);
             var isRequired = angular.isDefined(attr.required);
             
-            if (isRequired) {
-                eatGroupCtrl.addClass('eat-group-required');
-            }
+            eatGroupCtrl.setRequired(isRequired);
+            
             if (!element.attr('id')) {
                 element.attr('id', 'input_' + $eatCoreUtil.nextUid());
             }

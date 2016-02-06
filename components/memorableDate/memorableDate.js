@@ -31,6 +31,10 @@
            ngModelController.$render = renderViewValue;
            ngModelController.$parsers.push(parseOutput);
            
+           var isRequired = angular.isDefined(attrs.required);
+            eatGroupCtrl.setRequired(isRequired);
+            
+           
            // This will push the $viewValue value through the parsers
            // before it is synchronized out to the $modelValue and the ngModel
            // binding.

@@ -1,6 +1,11 @@
 .eat-group{
    display: block;
 }
+
+.eat-group-required label:after
+{
+     content:"*"
+}
 .eat-group-invalid{
     color:red;
 }

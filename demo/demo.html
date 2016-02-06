@@ -16,7 +16,7 @@
     
     <eat-group>
         <label>Some Text</label>
-        <input type='text' ng-model="vm.inputText"/>
+        <input type='text' required ng-model="vm.inputText"/>
         <eat-help>No need for help</eat-help>
     </eat-group>
     
@@ -31,7 +31,7 @@
     <br/><br/>
     <eat-group>
         <label>Your birthday</label>
-        <eat-memorable-date ng-model="vm.memorableDate2"/>
+        <eat-memorable-date required ng-model="vm.memorableDate2"/>
         <eat-help>For example: 28 2 1976</eat-help>
     </eat-group>
     memorableDate2:{{vm.memorableDate2}}
