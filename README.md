@@ -8,8 +8,4 @@ Todo:
 - write unit test (chai, mocha, sinon)
 - write e2e test (protractor)
 - create bower package (upload to bower... how?)
-
-    features:
 - add eat-group-required if input is required
-- 
-
