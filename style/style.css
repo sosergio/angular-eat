@@ -29,3 +29,10 @@
 .eat-input-buffet .eat-input{
     display: inline-table;
 }
+
+.eat-help{
+    color: darkslategrey;
+    font-size:0.9em;
+    padding:5px;
+    display: block;
+}

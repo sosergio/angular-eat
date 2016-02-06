@@ -9,3 +9,8 @@ Todo:
 - write e2e test (protractor)
 - create bower package (upload to bower... how?)
 - add eat-group-required if input is required
+- add localizer as a pluggable external service
+- add buffet: internation mobile phone
+- add buffet: country selector
+- add buffet: quick address (via google maps)
+- add buffet: money money money

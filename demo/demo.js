@@ -9,9 +9,11 @@
     function controller() {
         
         var vm = this;
-        vm.message = "test";
-        
-        vm.memorableDate2 = new Date(1980,2,11);
+        vm.message = "Please register using the form below.";
+        vm.user = {};
+        vm.submit = function(){
+            
+        }
     }
     
 })();

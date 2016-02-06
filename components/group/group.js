@@ -192,7 +192,7 @@
         };
 
         function postLink(scope, element) {
-            element.addClass('eat-label');
+            element.addClass('eat-help');
         }
         
         function EatHelpCtrl(){

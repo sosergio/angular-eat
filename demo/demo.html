@@ -11,38 +11,45 @@
 <body>
 
 <div ng-controller="appController as vm">
-    <h2>Demo</h2>
+    <h2>Register</h2>
     <p>{{vm.message}}</p>
     
-    <eat-group>
-        <label>Some Text</label>
-        <input type='text' required ng-model="vm.inputText"/>
-        <eat-help>No need for help</eat-help>
-    </eat-group>
+    <form ng-submit="vm.submit()">
+        <eat-group>
+            <label>Name</label>
+            <input type='text' required ng-model="vm.user.name"/>
+            <eat-help>Your fullname</eat-help>
+        </eat-group>
+        <br/>
+        
+        <eat-group-fast 
+            input='email' 
+            ng-model="vm.user.email" 
+            label='Your email' 
+            help='Optional, we are not spamming, promise!'>
+        </eat-group-fast>
+        
+        <br/>
+        <eat-group>
+            <label>Your telephone</label>
+            <input type="tel" required ng-model="vm.user.mobile"/>
+            <eat-help>For example: 07456639814</eat-help>
+        </eat-group>
+        
+        <br/>
+        <eat-group-fast 
+            input='eat-memorable-date'
+            ng-model="vm.user.birthday" 
+            label='Your birthday' 
+            help='For example: 28 2 1976'>
+        </eat-group-fast>
+         <br/> <br/> <br/>
+    <button type="submit">Submit</button>
+    </form>
     
-    <br/><br/>
-    <eat-group-fast 
-        input='text' 
-        ng-model="vm.inputText" 
-        label='Amount' 
-        help='Write your help here'>
-    </eat-group-fast>
-    
-    <br/><br/>
-    <eat-group>
-        <label>Your birthday</label>
-        <eat-memorable-date required ng-model="vm.memorableDate2"/>
-        <eat-help>For example: 28 2 1976</eat-help>
-    </eat-group>
-    memorableDate2:{{vm.memorableDate2}}
-    <br/><br/>
-    <eat-group-fast 
-        input='eat-memorable-date'
-        ng-model="vm.memorableDate" 
-        label='Your birthday' 
-        help='For example: 28 2 1976'>
-    </eat-group-fast>
-    memorableDate:{{vm.memorableDate}}
+    <div class="debug">
+        object:{{vm.user}}
+    </div>
 </div>
 
 

@@ -17,7 +17,7 @@
                 '<eat-input-buffet>'+
                     '<input type="number" max-length="2" min="1" max="31" ng-model="day"/>'+
                     '<input type="number" max-length="2" min="1" max="12" ng-model="month"/>'+
-                    '<input type="number"  max-length="4" min="1850" ng-model="year"/>'+
+                    '<input type="number" max-length="4" min="1850" ng-model="year"/>'+
                 '</eat-input-buffet>'
         };
 
