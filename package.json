@@ -1,0 +1,19 @@
+{
+  "name": "angular-eat",
+  "version": "1.0.0",
+  "description": "Enhanced AngularJS Tools",
+  "main": "eat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sosergio/angular-eat.git"
+  },
+  "author": "s. sorrentino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sosergio/angular-eat/issues"
+  },
+  "homepage": "https://github.com/sosergio/angular-eat#readme"
+}
