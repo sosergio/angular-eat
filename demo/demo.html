@@ -1,0 +1,50 @@
+<html ng-app="demoApp">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="demo.js"></script>
+<script src="../eat.js"></script>
+<script src="../core/core.js"></script>
+<script src="../components/components.js"></script>
+<script src="../components/group/group.js"></script>
+<script src="../components/group/fast.js"></script>
+<script src="../components/memorableDate/memorableDate.js"></script>
+<link rel="stylesheet" href="../style/style.css">
+<body>
+
+<div ng-controller="appController as vm">
+    <h2>Demo</h2>
+    <p>{{vm.message}}</p>
+    
+    <eat-group>
+        <label>Some Text</label>
+        <input type='text' ng-model="vm.inputText"/>
+        <eat-help>No need for help</eat-help>
+    </eat-group>
+    
+    <br/><br/>
+    <eat-group-fast 
+        input='text' 
+        ng-model="vm.inputText" 
+        label='Amount' 
+        help='Write your help here'>
+    </eat-group-fast>
+    
+    <br/><br/>
+    <eat-group>
+        <label>Your birthday</label>
+        <eat-memorable-date ng-model="vm.memorableDate2"/>
+        <eat-help>For example: 28 2 1976</eat-help>
+    </eat-group>
+    memorableDate2:{{vm.memorableDate2}}
+    <br/><br/>
+    <eat-group-fast 
+        input='eat-memorable-date'
+        ng-model="vm.memorableDate" 
+        label='Your birthday' 
+        help='For example: 28 2 1976'>
+    </eat-group-fast>
+    memorableDate:{{vm.memorableDate}}
+</div>
+
+
+</body>
+</html>
