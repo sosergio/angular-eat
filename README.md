@@ -7,7 +7,8 @@ Angular Eat (Enhanced Angular Tools) is a simple, easy-to-use library for dealin
 ## Features ##
 
 * Validation with ng-messages
-* Groups of inputs are easy to write in a single tag 
+* Groups of inputs are easy to write in a single tag
+* Comes with a variety of inputs recipes, called "buffets" 
 * Tested on Chrome
 
 ## Usage ##
@@ -34,22 +35,19 @@ Then simply use it as a directive in your html like this:
 or with the "fast" mode:
 ```html
 <eat-group-fast 
-    input='email' 
-    ng-model="vm.user.email" 
+    input='eat-memorable-date' 
+    ng-model="vm.user.birthday" 
     label='{{vm.user.emailLabel}}' 
-    help='Optional, we are not spamming, promise!'>
+    help='Optional, we will send a birthday gift!'>
 </eat-group-fast>
 ```
 
 ## Todo ##
-- add examples
-- write a proper readme.md
-- add some grunt tasks (less, injector, minify, watch)
+- add grunt and some tasks (less, injector, minify, watch)
 - write unit test (chai, mocha, sinon)
 - write e2e test (protractor)
 - create bower package (upload to bower... how?)
 - add comments in javascript
-Features:
 - add support for select/options
 - add eat-group-required if input is required
 - add localizer as a pluggable external service
