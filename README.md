@@ -4,6 +4,10 @@ Angular Eat (Enhanced Angular Tools) is a simple, easy-to-use library for dealin
 
 > Please note at the moment is still under development. If you want to keep track of the updates, check on this page inside the features list.
 
+## Demo ##
+
+fire your browser here [http://sosergio.github.io/] to see eat in action!
+
 ## Features ##
 
 * Validation with ng-messages
