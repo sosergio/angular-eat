@@ -17,7 +17,7 @@
                 '<eat-input-buffet>'+
                     '<input type="number" max-length="2" min="1" max="31" ng-model="day"/>'+
                     '<input type="number" max-length="2" min="1" max="12" ng-model="month"/>'+
-                    '<input type="number" max-length="4" min="1850" ng-model="year"/>'+
+                    '<input type="number" max-length="4" min="1800" max="2500" ng-model="year"/>'+
                 '</eat-input-buffet>'
         };
 
@@ -32,19 +32,23 @@
            ngModelController.$parsers.push(parseOutput);
            
            var isRequired = angular.isDefined(attrs.required);
-            eatGroupCtrl.setRequired(isRequired);
-            
+           eatGroupCtrl.setRequired(isRequired);
            
+           eatGroupCtrl.setNgModel(ngModelController);
+            
            // This will push the $viewValue value through the parsers
            // before it is synchronized out to the $modelValue and the ngModel
            // binding.
-           scope.$watch('day + month + year', function() {
-              var date = {
-                    year: scope.year, 
-                    month: scope.month, 
-                    day:scope.day
-              };
-              ngModelController.$setViewValue(date);
+           scope.$watch('day + month + year', function(newValue,oldValue) {
+              if(oldValue != newValue){
+                    var date = {
+                            year: scope.year, 
+                            month: scope.month, 
+                            day:scope.day
+                    };
+                    ngModelController.$setTouched(true);
+                    ngModelController.$setViewValue(date);
+              }
            });
                     
            // ngModel --> $modelValue --> [[[ Formatters ]]] --> $viewValue --> $render().
@@ -80,18 +84,35 @@
                return null;
            }
            
+            var isErrorGetter = function() {                
+                return ngModelController.$invalid && (ngModelController.$touched || eatGroupCtrl.isFormSubmitted());
+            };
+            scope.$watch(isErrorGetter, eatGroupCtrl.setInvalid);
+           
+           var _ele  = element;
            function setValidity(vm){
-               if(!ngModelController.$dirty) return true;
-               
                var isValid = false;
                if(vm && vm.day && vm.month && vm.year){
                    var date = new Date(vm.year,vm.month-1,vm.day);
                    isValid= $eatCoreUtil.isValidDate(date);
+               }else if(!isRequired && !vm){
+                   isValid = true;
                }
-               ngModelController.$setValidity("date", isValid);
-               eatGroupCtrl.setInvalid(!isValid);
+               
+               if(ngModelController.$touched || eatGroupCtrl.isFormSubmitted()){
+                   var yearVal = _ele[0].querySelector("[ng-model='year']").validity.valid;
+                   var monthVal = _ele[0].querySelector("[ng-model='month']").validity.valid;
+                   var dayVal = _ele[0].querySelector("[ng-model='day']").validity.valid;
+                   isValid = isValid && yearVal && monthVal && dayVal;
+                   ngModelController.$setValidity("date", isValid);
+                   eatGroupCtrl.setValid(isValid);
+               }
+               
                return isValid;
            }
+           
+           
+           
         }
 
     }

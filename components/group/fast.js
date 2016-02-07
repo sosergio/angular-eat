@@ -49,6 +49,10 @@
             help.html(attrs.help);
             eatGroup.append(help);
             
+            //creating the validation message directive
+            var messages = angular.element("<eat-messages/>");
+            eatGroup.append(messages);
+            
             //adding the group to the element
             element.append(eatGroup);
            

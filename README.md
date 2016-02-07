@@ -8,6 +8,9 @@ Todo:
 - write unit test (chai, mocha, sinon)
 - write e2e test (protractor)
 - create bower package (upload to bower... how?)
+- add comments in javascript
+Features:
+- add support for select/options
 - add eat-group-required if input is required
 - add localizer as a pluggable external service
 - add buffet: internation mobile phone

@@ -12,7 +12,8 @@ var nextUniqueId = 0;
     function eatCoreUtil(){
         var service = {
             nextUid : nextUid,
-            isValidDate: isValidDate
+            isValidDate: isValidDate,
+            getClosest: getClosest
         };
         return service;
         
@@ -37,5 +38,18 @@ var nextUniqueId = 0;
         else {
             return false
         }
+    }
+    
+    function getClosest(el, tagName, onlyParent) {
+        if (el instanceof angular.element) el = el[0];
+        tagName = tagName.toUpperCase();
+        if (onlyParent) el = el.parentNode;
+        if (!el) return null;
+        do {
+            if (el.nodeName === tagName) {
+            return el;
+            }
+        } while (el = el.parentNode);
+        return null;
     }
 })();

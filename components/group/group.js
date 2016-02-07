@@ -6,36 +6,68 @@
     .directive("label", label)
     .directive("input", input)
     .directive("eatHelp", eatHelp)
+    .directive("eatMessages", eatMessages)
     ;
     
-    function eatGroup(){
+    eatGroup.$inject= ["$eatCoreUtil"];
+    function eatGroup($eatCoreUtil){
         
         return {
             restrict: 'EA',
             link: postLink,
             controller: EatGroupCtrl,
-            controllerAs:"ctrl"
+            controllerAs:"ctrl",
+            require:["?^form", "eatGroup"]
         };
-
-        function postLink(scope, element) {
-            
+       
+        function postLink(scope, element, attrs, ctrls) {
+            var formCtrl = ctrls[0];
+            var eatGroupCtrl = ctrls[1];
+            if(formCtrl){
+                eatGroupCtrl.formCtrl = formCtrl;
+                
+                if (!formCtrl.$name) {
+                    //set a name on the form if it hasn't got one
+                    var name = 'form_' + $eatCoreUtil.nextUid();
+                    var form = $eatCoreUtil.getClosest(element[0],"form");
+                    angular.element(form).attr("name",name);
+                    formCtrl.$name = name;
+                }
+            }
             element.addClass('eat-group');
+             
+            
         }
         
-        EatGroupCtrl.$inject = ["$animate", "$element"];
-        function EatGroupCtrl($animate, $element){
+        EatGroupCtrl.$inject = ["$animate", "$element", "$eatCoreUtil"];
+        function EatGroupCtrl($animate, $element, $eatCoreUtil){
             var ctrl = this;
             ctrl.setInvalid = setInvalid;
             ctrl.setFocused = setFocused;
             ctrl.setRequired = setRequired;
+            ctrl.setValid = setValid;
+            ctrl.isFormSubmitted = isFormSubmitted;
+            ctrl.input = null;
+            ctrl.setInput = setInput; 
+            ctrl.formCtrl = null;
+            ctrl.isValid = false;
+            ctrl.ngModel = null;
+            ctrl.setNgModel = setNgModel;
             
             function setInvalid(isInvalid) {
+                ctrl.isValid = !isInvalid;
                 if (isInvalid) {
                     $animate.addClass($element, 'eat-group-invalid');
-                    $animate.removeClass($element, 'eat-group-valid');
                 } else {
-                    $animate.addClass($element, 'eat-group-valid');
                     $animate.removeClass($element, 'eat-group-invalid');
+                }
+            }  
+            function setValid(isValid) {
+                ctrl.isValid = isValid;
+                if (isValid) {
+                    $animate.addClass($element, 'eat-group-valid');
+                } else {
+                    $animate.removeClass($element, 'eat-group-valid');
                 }
             }  
             
@@ -45,8 +77,20 @@
             
             function setRequired(isRequired){
                 $element.toggleClass('eat-group-required', !!isRequired);
+            }  
+            
+            function setInput(input){
+                ctrl.input = input;
             }   
             
+            function setNgModel(model){
+                ctrl.ngModel = model;
+            }
+            
+            function isFormSubmitted() {
+                return ctrl.formCtrl ? ctrl.formCtrl.$submitted : false;
+           };
+           
             
         }
 
@@ -92,19 +136,11 @@
         };
 
         function postLink(scope, element, attr, ctrls) {
-            if(ctrls.length == 0)throw Error("eat-input must be inside an eat-group");
-            
             var eatGroupCtrl = ctrls[0];
-            var ngModelCtrl;
-            var eatInputBuffetCtrl;
+            if(!eatGroupCtrl)throw Error("eat-input must be inside an eat-group");
             
-            if(ctrls[1]){
-                ngModelCtrl = ctrls[1];
-            }
-            if(ctrls[2]){
-                eatInputBuffetCtrl = ctrls[2];   
-            }
-            //pant!
+            var ngModelCtrl = ctrls[1];
+            var eatInputBuffetCtrl = ctrls[2];
             
             element.addClass('eat-input');
             var isReadonly = angular.isDefined(attr.readonly);
@@ -112,8 +148,13 @@
             
             eatGroupCtrl.setRequired(isRequired);
             
-            if (!element.attr('id')) {
-                element.attr('id', 'input_' + $eatCoreUtil.nextUid());
+            var id = element.attr('id'); 
+            if (!id) {
+                id = 'input_' + $eatCoreUtil.nextUid();
+                element.attr('id', id);
+            }
+            if (!element.attr('name')) {
+                element.attr('name', id);
             }
             
             if (!isReadonly) {
@@ -130,20 +171,11 @@
             }
                 
             if(!eatInputBuffetCtrl){
+                eatGroupCtrl.setInput(element[0]);
+                eatGroupCtrl.setNgModel(ngModelCtrl);
                 ngModelCtrl.$parsers.push(ngModelPipelineCheckValue);
             }
              
-            
-            //eatGroup or inputBuffet
-            /*var containerCtrl;
-            if(eatInputBuffetCtrl){
-                eatInputBuffetCtrl.addInput(element[0]);
-                containerCtrl = eatInputBuffetCtrl;
-            }else{
-                eatGroupCtrl.input = element[0];
-                containerCtrl = eatGroupCtrl;
-            }
-            */
             function ngModelPipelineCheckValue(arg) {
                 eatGroupCtrl.setInvalid(ngModelCtrl.$isEmpty(arg), element[0].id);
                 return arg;
@@ -196,6 +228,34 @@
         }
         
         function EatHelpCtrl(){
+            
+        }
+    }
+    
+      function eatMessages(){
+        
+        return {
+            restrict: 'E',
+            scope:{},
+            template:'<div ng-messages="errorModel"><div ng-messages-include="eat-error-messages"></div></div>',
+            link:preLink,
+            controller: EatMessagesCtrl,
+            require:["^eatGroup"]
+        };
+        
+        function preLink(scope, element, attrs, ctrls){
+            var eatGroupCtrl = ctrls[0];
+            var getter = function(){
+                return eatGroupCtrl.ngModel.$touched ||
+                       eatGroupCtrl.formCtrl.$submitted ? 
+                            eatGroupCtrl.ngModel.$error : null;
+            }
+            scope.$watch(getter, function(newValue){
+                scope.errorModel = newValue;
+            });
+            
+        }
+        function EatMessagesCtrl(){
             
         }
     }
