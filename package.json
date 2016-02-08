@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/sosergio/angular-eat/issues"
   },
-  "homepage": "https://github.com/sosergio/angular-eat#readme"
+  "homepage": "https://github.com/sosergio/angular-eat#readme",
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "grunt": "^0.4.5"
+  }
 }

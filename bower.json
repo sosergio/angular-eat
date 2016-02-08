@@ -1,0 +1,24 @@
+{
+  "name": "angular-eat",
+  "description": "Enhanced AngularJS Tools",
+  "main": "eat.js",
+  "authors": [
+    "s. sorrentino"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-file-upload": "~11.2.3",
+    "angular": "~1.5.0",
+    "angular-messages": "~1.5.0"
+  }
+}

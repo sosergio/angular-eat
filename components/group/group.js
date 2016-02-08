@@ -237,7 +237,7 @@
         return {
             restrict: 'E',
             scope:{},
-            template:'<div ng-messages="errorModel"><div ng-messages-include="eat-error-messages"></div></div>',
+            template:'<div class="eat-messages" ng-messages="errorModel"><div ng-messages-include="eat-error-messages"></div></div>',
             link:preLink,
             controller: EatMessagesCtrl,
             require:["^eatGroup"]

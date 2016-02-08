@@ -10,29 +10,46 @@
     color:red;
 }
 
-.eat-group-focused{
-    background-color: lightslategray;
+.eat-group-focused .eat-label{
+    font-weight: bold;    
 }
 
 .eat-group-valid{
     color:green;
 }
 
-.eat-label{
+.eat-label, .eat-messages{
     display:block;
-    padding:5px;
-    
+    padding:5px 0 5px 0;
 }
-.eat-group .eat-input{
+.eat-group>.eat-input{
     display:block;
+    width: 100%;
 }
 .eat-input-buffet .eat-input{
     display: inline-table;
 }
 
+.eat-group select,
+.eat-group input{
+    font-size:12pt;
+    padding: 8px;
+}
+
 .eat-help{
-    color: darkslategrey;
+    color: #7B7B7B;
     font-size:0.9em;
-    padding:5px;
+    padding:5px 0 5px 0;
     display: block;
+}
+.eat-money-currency-symbol{
+    position: relative;
+    left: 19px;
+    z-index: 1;
+}
+.eat-money input{
+    position: relative;
+    left: -8px;
+    z-index: 0;
+    padding-left:40px;
 }
