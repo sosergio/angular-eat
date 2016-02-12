@@ -84,10 +84,7 @@
                return null;
            }
            
-            var isErrorGetter = function() {                
-                return ngModelController.$invalid && (ngModelController.$touched || eatGroupCtrl.isFormSubmitted());
-            };
-            scope.$watch(isErrorGetter, eatGroupCtrl.setInvalid);
+            
            
            var _ele  = element;
            function setValidity(vm){

@@ -39,19 +39,24 @@
             
         }
         
-        EatGroupCtrl.$inject = ["$animate", "$element", "$eatCoreUtil"];
-        function EatGroupCtrl($animate, $element, $eatCoreUtil){
+        EatGroupCtrl.$inject = ["$animate", "$element","$scope", "$eatCoreUtil"];
+        function EatGroupCtrl($animate, $element, $scope, $eatCoreUtil){
             var ctrl = this;
+            //properties
+            ctrl.input = null;
+            ctrl.formCtrl = null;
+            ctrl.isValid = false;
+            ctrl.ngModel = null;
+            ctrl.isRequired = false;
+
+            //methods            
             ctrl.setInvalid = setInvalid;
             ctrl.setFocused = setFocused;
             ctrl.setRequired = setRequired;
             ctrl.setValid = setValid;
             ctrl.isFormSubmitted = isFormSubmitted;
-            ctrl.input = null;
             ctrl.setInput = setInput; 
-            ctrl.formCtrl = null;
-            ctrl.isValid = false;
-            ctrl.ngModel = null;
+            ctrl.setHasValue = setHasValue; 
             ctrl.setNgModel = setNgModel;
             
             function setInvalid(isInvalid) {
@@ -69,13 +74,25 @@
                 } else {
                     $animate.removeClass($element, 'eat-group-valid');
                 }
-            }  
+            } 
             
+            function setHasValue(hasValue) {
+                setInvalid(ctrl.isRequired && !hasValue);
+                setValid(hasValue);
+                
+                if (hasValue) {
+                    $animate.addClass($element, 'eat-group-has-value');
+                } else {
+                    $animate.removeClass($element, 'eat-group-has-value');
+                }
+            }  
+             
             function setFocused(isFocused) {
                 $element.toggleClass('eat-group-focused', !!isFocused);
             }
             
             function setRequired(isRequired){
+                ctrl.isRequired = isRequired;
                 $element.toggleClass('eat-group-required', !!isRequired);
             }  
             
@@ -85,12 +102,16 @@
             
             function setNgModel(model){
                 ctrl.ngModel = model;
+                $scope.$watch(isErrorGetter, setInvalid);
             }
             
             function isFormSubmitted() {
                 return ctrl.formCtrl ? ctrl.formCtrl.$submitted : false;
-           };
+            };
            
+            var isErrorGetter = function() {                
+                return ctrl.ngModel.$invalid && (ctrl.ngModel.$touched || isFormSubmitted());
+            };
             
         }
 
@@ -157,6 +178,7 @@
                 element.attr('name', id);
             }
             
+            
             if (!isReadonly) {
                 element
                     .on('focus', function(ev) {
@@ -171,20 +193,21 @@
             }
                 
             if(!eatInputBuffetCtrl){
-                eatGroupCtrl.setInput(element[0]);
                 eatGroupCtrl.setNgModel(ngModelCtrl);
                 ngModelCtrl.$parsers.push(ngModelPipelineCheckValue);
+                ngModelCtrl.$formatters.push(ngModelPipelineCheckValue);
             }
-             
+            
             function ngModelPipelineCheckValue(arg) {
-                eatGroupCtrl.setInvalid(ngModelCtrl.$isEmpty(arg), element[0].id);
+                eatGroupCtrl.setHasValue(!ngModelCtrl.$isEmpty(arg));
                 return arg;
             }
 
             function inputCheckValue() {
                 // An input's value counts if its length > 0,
                 // or if the input's validity state says it has bad input (eg string in a number input)
-                eatGroupCtrl.setInvalid(element.val().length == 0 || (element[0].validity || {}).badInput, element[0].id);
+                //eatGroupCtrl.setInvalid(element.val().length == 0 || (element[0].validity || {}).badInput);
+                eatGroupCtrl.setHasValue(element.val().length == 0 || (element[0].validity || {}).badInput);
             }
         }
         

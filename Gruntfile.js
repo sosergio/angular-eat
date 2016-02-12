@@ -11,9 +11,6 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-        build: {
-            src: [ 'build' ]
-        },
         dist: {
             src: [ 'dist' ]
         }
@@ -30,14 +27,7 @@ module.exports = function(grunt) {
             dest: 'dist/<%= pkg.name %>.js'
         }
     },
-    copy: {
-      css: {
-        cwd: 'src',
-        src: [ '**/*.css' ],
-        dest: 'dist',
-        expand: true
-      },
-    },
+    
     uglify: {
         options: {
             // the banner is inserted at the top of the output
@@ -51,17 +41,18 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['src/**/*'],
-      tasks: ['less:development']
+      tasks: ['less']
     },
     less: {
-        development: {
+        default:{
             options: {},
             files: {
-                "dist/style/style.css": "src/style/style.less",
-                "dist/style/material.css": "src/style/material.less"
+                "dist/style.css": "src/style/style.less",
+                "dist/material.css": "src/style/material.less"
             }
         }
     }
+        
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -72,8 +63,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-less');
   
-  grunt.registerTask('default', ['less:development', 'watch']);
-  grunt.registerTask('dist', ['clean:dist', 'concat', 'uglify', 'copy:css']);
+  grunt.registerTask('default', ['clean:dist','concat', 'uglify', 'less', 'watch']);
+  grunt.registerTask('dist', ['clean:dist', 'concat', 'uglify', 'less']);
   
 
 };
