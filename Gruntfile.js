@@ -50,8 +50,17 @@ module.exports = function(grunt) {
         }
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
+      files: ['src/**/*'],
+      tasks: ['less:development']
+    },
+    less: {
+        development: {
+            options: {},
+            files: {
+                "dist/style/style.css": "src/style/style.less",
+                "dist/style/material.css": "src/style/material.less"
+            }
+        }
     }
   });
 
@@ -61,8 +70,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-less');
   
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['less:development', 'watch']);
   grunt.registerTask('dist', ['clean:dist', 'concat', 'uglify', 'copy:css']);
   
 

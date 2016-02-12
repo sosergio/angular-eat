@@ -1,17 +1,33 @@
 .eat-group{
    display: block;
+   
+    &> .eat-input{
+        display:block;
+        width: 100%;
+    }
+    
+    select,
+    input{
+        font-size:12pt;
+        padding: 8px;
+    }
+
 }
 
-.eat-group-required label:after
-{
-     content:"*"
+.eat-group-required {
+    
+    label:after{
+        content:"*"
+    }
 }
 .eat-group-invalid{
     color:red;
 }
 
-.eat-group-focused .eat-label{
-    font-weight: bold;    
+.eat-group-focused {
+    .eat-label{
+        font-weight: bold;    
+    }
 }
 
 .eat-group-valid{
@@ -22,19 +38,13 @@
     display:block;
     padding:5px 0 5px 0;
 }
-.eat-group>.eat-input{
-    display:block;
-    width: 100%;
-}
-.eat-input-buffet .eat-input{
-    display: inline-table;
+
+.eat-input-buffet {
+    .eat-input{
+        display: inline-table;
+    }
 }
 
-.eat-group select,
-.eat-group input{
-    font-size:12pt;
-    padding: 8px;
-}
 
 .eat-help{
     color: #7B7B7B;

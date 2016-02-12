@@ -1,0 +1,69 @@
+.eat-group {
+    display:block;
+    height: 80px;
+    
+    .eat-label {
+        transition: 0.15s ease-in-out;
+        position:absolute;
+        padding:10px 4px 10px 3px;
+        font-size:1em;
+        z-index:-1;
+    }
+    .eat-input {
+        border: none;
+        background: none;
+        border-bottom: 1px solid gray;
+        outline: none;
+        height: 40px;
+        padding:10px 4px 10px 3px;
+        font-size:1em;      
+          
+    }
+    >.eat-input{
+        display:block;
+    }
+    .eat-help {
+        transition: 0.15s ease-in-out;
+        transform-origin: 100% 100%;
+        position:absolute;
+        padding:10px 4px 10px 3px;
+        font-size:0.8em;
+        
+    }
+    
+    .eat-input-buffet{
+        display:flex;
+        .eat-input {
+            margin-right: 4px;
+      
+            &:last-child {
+                margin-right: 0px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.eat-group-invalid{
+    color:red;
+    
+    .eat-input {
+        border-bottom: 1px solid red;
+    }
+
+}
+
+.eat-group-focused,
+.eat-group-has-value {
+     .eat-label {
+        font-size: 0.8em;
+        margin-top:-25px;
+    }
+}
+.eat-group-focused{
+    
+    .eat-input {
+       border-bottom: 2px solid blue;
+    }
+}
+
